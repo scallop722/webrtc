@@ -1,5 +1,17 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  h1 #{title}
+  div(class="container")
+    //- button(id='submit' type='button') submit
+    button(id='media_auth' type='button') メディア
+    //- button(id='send_media' type='button') メディア通信
+    div(id='display')
+      video(id='display_video' autoplay)
+
+    form(class="form-inline")
+      div(class="form-group")
+        label(for="msgForm") メッセージ：
+        input(type="text" class="form-control" id="msgForm")
+      button(type="submit" class="btn btn-primary") 送信
+    div(id="chatLogs")
