@@ -46,35 +46,6 @@ module.exports = function(socket) {
         socket.emit('server_to_client', {value : data.value});
     });
     
-    function createOffer() {
-        trace('called create Offer');
-        if(!!peerConnection) {
-            peerConnection.createOffer()
-            .then(function (offer) {
-                trace('create offer: ' + offer);
-                return peerConnection.setLocalDescription(new RTCSessionDescription(offer));
-            })
-            .then(function () {
-                trace('send offer' + peerConnection.localDescription);
-                socket.emit('sendOffer', peerConnection.localDescription);
-            });
-        }
-    }
-
-    function createAnswer() {
-        trace('called create Answer');
-        if (!!peerConnection) {
-            peerConnection.createAnswer()
-            .then(function (answer) {
-                trace('create answer' + answer);
-                return peerConnection.setLocalDescription(new RTCSessionDescription(answer));
-            })
-            .then(function () {
-                trace('send answer');
-                socket.emit('sendAnswer', peerConnection.localDescription);
-            });
-        }
-    }
     /**
      * 自身の入室しているroomで、自分以外のユーザへデータを送信する。
      * @eventName {String} 対象となるイベントの名前
@@ -83,8 +54,8 @@ module.exports = function(socket) {
     function broadcastToOwnRoom(eventName, data) {
         console.log('data => ' + data);
         console.log('users => ' + users);
-        console.log('user => ' + users[socket.id]);
     
+        console.log('users => ' + socket.id);
         socket.broadcast.to(users[socket.id].room).emit(eventName, data);
     }
 }
