@@ -1,8 +1,9 @@
 // chat 利用者
 var users = {};
+var roomName;
 
 module.exports = function(socket) {
-    
+
     /**
      * room入室処理
      */
@@ -12,6 +13,9 @@ module.exports = function(socket) {
             room: user.roomName,
             name: user.name
         }
+        console.log('user room name -> ' + user.roomName);
+        console.log('user name -> ' + user.name);
+        roomName = user.roomName;
         socket.join(user.roomName, () => {
             console.log(users);
         });
@@ -52,10 +56,8 @@ module.exports = function(socket) {
      * @data {Object} 送信するデータ
      */
     function broadcastToOwnRoom(eventName, data) {
-        console.log('data => ' + data);
-        console.log('users => ' + users);
-    
-        console.log('users => ' + socket.id);
-        socket.broadcast.to(users[socket.id].room).emit(eventName, data);
+        console.log('roomName => ' + roomName);
+
+        socket.broadcast.to(roomName).emit(eventName, data);
     }
 }

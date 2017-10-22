@@ -6,15 +6,15 @@ $(function(){
      */
     function _init() {
         socket.emit('join', {
-            roomName: 'test',
-            name: 'test' + Date.now()
+            roomName: roomName,
+            name: name
         });
     }
 
     socket.on("server_to_client", function(data){appendMsg(data.value)});
 
     function appendMsg(text) {
-        $("#chatLogs").append("<div>" + text + "</div>");
+        $("#chatLogs").append("<div>" + name + ' : ' + text + "</div>");
     }
 
     $("form").submit(function(e){
