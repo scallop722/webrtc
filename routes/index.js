@@ -8,8 +8,10 @@ var roomName,
 router.get('/', function(req, res, next) {
   roomName = req.query.roomName;
   name = req.query.name;
+  console.log(roomName);
+  console.log(name);
 
-  res.render('index', { title: 'Express', roomName: roomName, name: name});
+  res.render('index', { title: 'Express'});
 });
 
 module.exports = router;
